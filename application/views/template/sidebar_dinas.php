@@ -45,13 +45,6 @@
 
         <!-- Nav Item -->
         <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('saw/index') ?>">
-                <i class="fas fa-fw fa-solid fa-calculator"></i>
-                <span>Perhitungan SAW</span></a>
-        </li>
-
-        <!-- Nav Item -->
-        <li class="nav-item">
             <a class="nav-link" href="<?= base_url('dinas/pemeringkatan') ?>">
                 <i class="fas fa-fw fa-solid fa-trophy"></i>
                 <span>Pemeringkatan</span></a>
