@@ -1,0 +1,29 @@
+.bg-login-registrasi {
+	background: url("../img/bg.png") no-repeat center center fixed;
+	-moz-background-size: cover;
+	-webkit-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.sampul {
+	width: 100px;
+}
+.table > thead > tr > * {
+	vertical-align: middle;
+	text-align: center;
+}
+.table > tbody > tr > * {
+	vertical-align: middle;
+	text-align: center;
+}
+th {
+	text-align: center;
+	vertical-align: middle;
+	font-size: small;
+}
+td {
+	text-align: center;
+	vertical-align: middle;
+	font-size: small;
+}
