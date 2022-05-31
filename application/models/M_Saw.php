@@ -25,7 +25,7 @@ class M_Saw extends CI_Model
 
     public function get_saw()
     {
-        $pariwisata = $this->M_Desa->getPariwisataWithNilai();
+        $pariwisata = $this->M_Dinas->getPariwisataWithNilai();
         foreach ($pariwisata as $key => $value) {
             foreach ($pariwisata[$key]['nilai'] as $key2 => $value2) {
                 $arr = array();
