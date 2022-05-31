@@ -50,6 +50,13 @@
                 <span>Pemeringkatan</span></a>
         </li>
 
+        <!-- Nav Item -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('dinas/tampil_pembangunan') ?>">
+                <i class="fas fa-fw fa-landmark"></i>
+                <span>Pembangunan</span></a>
+        </li>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
