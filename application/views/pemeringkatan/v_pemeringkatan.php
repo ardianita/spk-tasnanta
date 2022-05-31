@@ -40,7 +40,7 @@
                                 endforeach; ?>
                                 <td><?= round($w['total_saw'], 1); ?></td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="<?= base_url('dinas/pemeringkatan/#') ?>"><i class="fas fa-fw fa-envelope"></i></a>
+                                    <a class="btn btn-info btn-sm" href="<?= base_url('dinas/ubah_pembangunan/' . $w['id_pariwisata']); ?>"><i class="fas fa-fw fa-envelope"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
