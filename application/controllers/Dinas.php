@@ -262,4 +262,28 @@ class dinas extends CI_Controller
         $this->load->view('pemeringkatan/v_pemeringkatan', $data);
         $this->load->view('template/footer');
     }
+
+    public function tampil_pembangunan()
+    {
+        $data['title'] = 'Pembangunan';
+        $data['admin'] = $this->M_Dinas->getDataDinas();
+        $data['wisata'] = $this->M_Desa->getWisata();
+        $data['pengguna'] = $this->M_Dinas->getDataUser();
+
+        $this->load->view('template/header', $data);
+        $this->load->view('template/sidebar_dinas', $data);
+        $this->load->view('pembangunan/index', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function ubah_pembangunan($id_pariwisata)
+    {
+        $data['title'] = 'Pembangunan';
+        $data['admin'] = $this->M_Dinas->getDataDinas();
+        $data['wisata'] = $this->M_Desa->getWisataById($id_pariwisata);
+
+        $this->M_Dinas->ubah_status_p($id_pariwisata);
+        $this->session->set_flashdata('pesan', '<div class="alert alert-info alert-dismissible fade show" role="alert">Status pembangunan ditetapkan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        redirect('dinas/pemeringkatan');
+    }
 }
