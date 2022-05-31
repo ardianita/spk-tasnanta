@@ -123,4 +123,42 @@ class M_Dinas extends CI_model
         $this->db->where('email', $email);
         $this->db->update('tb_user', $data);
     }
+
+    public function getValidWisata()
+    {
+        $this->db->select('*');
+        $this->db->from('tb_pariwisata');
+        $this->db->where('id_status', '1');
+        $this->db->where('built_status', '0');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getPariwisataWithNilai()
+    {
+        $pariwisata = $this->getValidWisata();
+        foreach ($pariwisata as $key => $value) {
+            $this->db->select('*');
+            $this->db->from('tb_kriteria');
+            $this->db->join('tb_nilai', 'tb_nilai.kriteria_id = tb_kriteria.id_kriteria', 'inner');
+            $this->db->join('tb_subkriteria', 'tb_nilai.id_subkriteria = tb_subkriteria.id_subkriteria', 'inner');
+            $this->db->where('id_pariwisata', $value['id_pariwisata']);
+            $query = $this->db->get();
+            $pariwisata[$key]['nilai'] = $query->result_array();
+        }
+        return $pariwisata;
+    }
+
+    public function ubah_status_p($id_pariwisata)
+    {
+        $built_status  = 1;
+
+        $data = array(
+            'built_status'  => $built_status,
+        );
+
+        $this->db->set('built_status', $built_status);
+        $this->db->where('id_pariwisata', $id_pariwisata);
+        $this->db->update('tb_pariwisata', $data);
+    }
 }
