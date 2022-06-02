@@ -149,6 +149,17 @@ class M_Dinas extends CI_model
         return $pariwisata;
     }
 
+    public function send_notif($from, $to, $title, $desription)
+    {
+        $notif = array(
+            'from_user_id'  => $from,
+            'user_id'       => $to,
+            'title'          => $title,
+            'description'   => $desription,
+        );
+        $this->db->insert('tb_notif', $notif);
+    }
+
     public function ubah_status_p($id_pariwisata)
     {
         $built_status  = 1;
@@ -157,8 +168,13 @@ class M_Dinas extends CI_model
             'built_status'  => $built_status,
         );
 
-        $this->db->set('built_status', $built_status);
         $this->db->where('id_pariwisata', $id_pariwisata);
         $this->db->update('tb_pariwisata', $data);
+
+        $pariwisata = $this->db->get_where('tb_pariwisata', ['id_pariwisata' => $id_pariwisata])->row_array();
+        $email = $this->session->userdata('email');
+
+        $user = $this->db->get_where('tb_user', ['email' => $email])->row_array();
+        $this->send_notif($user['id_user'], $pariwisata['id_user'], 'Persetujuan Pembangunan', 'Pembangunan wisata ' . $pariwisata['nm_pariwisata'] . ' disetujui.');
     }
 }

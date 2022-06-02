@@ -15,6 +15,7 @@ class desa extends CI_Controller
     {
         $data['title'] = 'Dashboard';
         $data['user'] = $this->M_Desa->getDataByEmail();
+        $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_desa', $data);
@@ -26,6 +27,7 @@ class desa extends CI_Controller
     {
         $data['title'] = 'Profile';
         $data['user'] = $this->M_Desa->getDataByEmail();
+        $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_desa', $data);
@@ -36,6 +38,7 @@ class desa extends CI_Controller
     {
         $data['title'] = 'Edit Profile';
         $data['user'] = $this->M_Desa->getDataByEmail();
+        $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim', [
             'required'  => 'Username Wajib Diisi!'
@@ -62,9 +65,9 @@ class desa extends CI_Controller
 
     public function ubah_password()
     {
-
         $data['title'] = 'Ubah Password';
         $data['user'] = $this->M_Desa->getDataByEmail();
+        $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
         $this->form_validation->set_rules('password_lama', 'Password Lama', 'required|trim', [
             'required'  => 'Password Wajib Diisi!'
@@ -115,6 +118,7 @@ class desa extends CI_Controller
         $data['kriteria'] = $this->M_Kriteria->getAllKriteria();
         $data['subkriteria'] = $this->M_Kriteria->getAllSubkriteria();
         $data['nilai'] = $this->M_Desa->getPariwisataWithNilai();
+        $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_desa', $data);
@@ -129,6 +133,7 @@ class desa extends CI_Controller
         $data['kriteria'] = $this->M_Kriteria->getAllKriteria();
         $data['subkriteria'] = $this->M_Kriteria->getAllSubkriteria();
         $data['nilai'] = $this->M_Desa->getNilaiByPariwisata();
+        $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
         $this->form_validation->set_rules('nm_pariwisata', 'Nama Destinasi Wisata', 'required|is_unique[tb_pariwisata.nm_pariwisata]', [
             'required'  => 'Nama Destinasi Wisata Wajib Diisi!',
@@ -166,6 +171,7 @@ class desa extends CI_Controller
         $data['wisata'] = $this->M_Desa->getPariwisataWithNilaiById($id_pariwisata);
         $data['kriteria'] = $this->M_Kriteria->getAllKriteria();
         $data['subkriteria'] = $this->M_Kriteria->getAllSubkriteria();
+        $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
         $this->form_validation->set_rules('nm_pariwisata', 'Nama Destinasi Wisata', 'required', [
             'required'  => 'Nama Destinasi Wisata Wajib Diisi!',
@@ -181,5 +187,22 @@ class desa extends CI_Controller
             $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data berhasil diubah!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('desa/tampil_survey');
         }
+    }
+
+    public function getUserNotif($user_id)
+    {
+        $data = $this->M_Desa->getUserNotif($user_id);
+        echo json_encode($data);
+    }
+
+    public function getCountUserNotifUnread($user_id)
+    {
+        $data = $this->M_Desa->getCountUserNotifUnread($user_id);
+        echo $data;
+    }
+
+    public function readAllNotif($user_id)
+    {
+        $this->M_Desa->readAllNotif($user_id);
     }
 }

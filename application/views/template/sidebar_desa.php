@@ -54,25 +54,14 @@
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
                             <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
+                            <span class="badge badge-danger badge-counter" id="count-notif"><?= $tot_notif; ?></span>
                         </a>
                         <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" id="notifikasi">
                             <h6 class="dropdown-header">
-                                Alerts Center
+                                Notifikasi
                             </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            <div id="notif-data"><span class="font-weight-bold">Memuat data...</span></div>
                         </div>
                     </li>
 
@@ -125,3 +114,65 @@
                     </div>
                 </div>
             </div>
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    count_notif(); //call function get notif
+
+                    //function get notif
+                    function count_notif() {
+                        $.ajax({
+                            type: 'ajax',
+                            url: '<?php echo site_url('desa/getCountUserNotifUnread/' . $user['id_user']) ?>',
+                            async: true,
+                            dataType: 'json',
+                            success: function(data) {
+                                document.getElementById("count-notif").innerHTML = data;
+                            }
+
+                        });
+
+                        $.ajax({
+                            type: 'ajax',
+                            url: '<?php echo site_url('desa/getUserNotif/' . $user['id_user']) ?>',
+                            async: true,
+                            dataType: 'json',
+                            success: function(data) {
+
+                                console.log(data);
+                                var html = '';
+                                var i;
+                                for (i = 0; i < data.length; i++) {
+                                    html +=
+                                        '<a class="dropdown-item d-flex align-items-center ' + (data[i]
+                                            .is_read == 0 ? 'bg-secondary' : 'bg-light') +
+                                        '" href="#">' +
+                                        '<div class="mr-3">' +
+                                        '<div class="icon-circle bg-primary">' +
+                                        '<i class="fas fa-file-alt text-white"></i>' +
+                                        '</div></div>' +
+                                        '<div><div class="small text-gray-500">' + data[i].created_at +
+                                        '</div><span class="font-weight-bold">' + data[i].description +
+                                        '</span></div></a>';
+                                }
+                                document.getElementById("notif-data").innerHTML = html;
+                            }
+
+                        });
+                    }
+
+                    $('#alertsDropdown').on('click', function() {
+                        $.ajax({
+                            type: 'ajax',
+                            url: '<?php echo site_url('desa/readAllNotif/' . $user['id_user']) ?>',
+                            async: true,
+                            dataType: 'json'
+
+                        });
+                    });
+
+                    $('#notifikasi').parent().on('hidden.bs.dropdown', function() {
+                        count_notif();
+                    });
+                });
+            </script>

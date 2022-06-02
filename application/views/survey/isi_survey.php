@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">Majukan Pembangunan Wisata Daerah Anda</h1>
+    <a class="btn btn-primary btn-sm my-2" href="<?= base_url('desa/tampil_survey'); ?>"><i class="fas fa-fw fa-angle-left"></i> Kembali</a>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary"><?= $title; ?></h6>
@@ -26,9 +26,7 @@
                     </div>
                 <?php endforeach ?>
                 <button type="submit" class="btn btn-primary">Simpan</button>
-
-
-
             </form>
         </div>
     </div>
+</div>

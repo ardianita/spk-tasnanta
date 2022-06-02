@@ -40,7 +40,7 @@
                                 endforeach; ?>
                                 <td><?= round($w['total_saw'], 1); ?></td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="<?= base_url('dinas/ubah_pembangunan/' . $w['id_pariwisata']); ?>"><i class="fas fa-fw fa-envelope"></i></a>
+                                    <a class="btn btn-primary btn-sm" data-toggle="modal" data-target=<?= "#modalStat" . $w['id_pariwisata'] ?>><i class="fas fa-fw fa-envelope"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -51,3 +51,24 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+
+<?php foreach ($wisata as $w) : ?>
+    <div class="modal fade" id=<?= "modalStat" . $w['id_pariwisata'] ?> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Apakah Anda yakin ingin melakukan pembangunan pada destinasi ini?</h5>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" type="button" data-dismiss="modal">Tidak</a>
+                    <a class="btn btn-danger" href="<?= base_url('dinas/ubah_pembangunan/') . $w['id_pariwisata']; ?>">Ya</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>

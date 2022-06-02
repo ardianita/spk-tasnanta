@@ -1,11 +1,11 @@
 <div class="container fluid">
+    <a class="btn btn-primary btn-sm my-2" href="<?= base_url('desa/tampil_survey'); ?>"><i class="fas fa-fw fa-angle-left"></i> Kembali</a>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary"><?= $title; ?></h6>
         </div>
         <div class="card-body">
             <form method="POST" action="<?= base_url('desa/edit_survey/') . $wisata['id_pariwisata']; ?>">
-
                 <input type="hidden" class="form-control" name="id_user" value="<?= $user['id_user']; ?>">
                 <div class="form-group">
                     <label>Nama Destinasi Wisata</label>

@@ -77,7 +77,6 @@ class dinas extends CI_Controller
 
     public function tampil_destinasi()
     {
-
         $data['title'] = 'Data Infrastruktur Destinasi Wisata';
         $data['admin'] = $this->M_Dinas->getDataDinas();
         $data['pengguna'] = $this->M_Dinas->getDataUser();

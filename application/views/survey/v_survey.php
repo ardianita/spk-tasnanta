@@ -21,8 +21,8 @@
                     <tbody>
                         <?php $no = 1;
                         foreach ($nilai as $n) : ?>
-                            <tr>
-                                <?php if ($n['id_user'] == $user['id_user']) { ?>
+                            <?php if ($n['id_user'] == $user['id_user']) { ?>
+                                <tr>
                                     <td><?= $no++; ?></td>
                                     <td><?= $n['nm_pariwisata']; ?></td>
                                     <?php foreach ($status as $st) :
@@ -50,9 +50,9 @@
                                         endforeach; ?>
                                         <a class="btn btn-danger" data-toggle="modal" data-target=<?= "#hapusWis" . $n2['id_pariwisata'] ?>><i class="fas fa-fw fa-trash"></i></a>
                                     </td>
-                            </tr>
-                    <?php }
-                            endforeach; ?>
+                                </tr>
+                        <?php }
+                        endforeach; ?>
                     </tbody>
                 </table>
             </div>
