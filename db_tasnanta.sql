@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2022 at 02:20 AM
+-- Generation Time: Jun 03, 2022 at 09:45 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -136,7 +136,49 @@ INSERT INTO `tb_nilai` (`id_nilai`, `id_pariwisata`, `kriteria_id`, `id_subkrite
 (107, 22, 10, 43),
 (108, 22, 11, 33),
 (109, 22, 12, 22),
-(110, 22, 13, 37);
+(110, 22, 13, 37),
+(147, 26, 1, 2),
+(148, 26, 2, 9),
+(149, 26, 3, 10),
+(150, 26, 4, 12),
+(151, 26, 5, 18),
+(152, 26, 6, 41),
+(153, 26, 7, 25),
+(154, 26, 9, 31),
+(155, 26, 10, 44),
+(156, 26, 11, 32),
+(157, 26, 12, 22),
+(158, 26, 13, 36);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_notif`
+--
+
+CREATE TABLE `tb_notif` (
+  `id_notif` int(11) NOT NULL,
+  `from_user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_read` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_notif`
+--
+
+INSERT INTO `tb_notif` (`id_notif`, `from_user_id`, `user_id`, `title`, `description`, `created_at`, `is_read`) VALUES
+(4, 23, 19, 'Persetujuan Pembangunan', 'Pembangunan wisata Air Terjun Slamir disetujui.', '2022-06-02 06:05:39', 1),
+(5, 23, 19, 'Persetujuan Pembangunan', 'Pembangunan wisata Nongko Ijo disetujui.', '2022-06-02 06:33:30', 1),
+(6, 23, 24, 'Persetujuan Pembangunan', 'Pembangunan wisata Air Terjun Krecekan Denu disetujui.', '2022-06-02 08:44:31', 1),
+(7, 23, 24, 'Persetujuan Pembangunan', 'Pembangunan wisata Air Terjun Banyulawe Dong disetujui.', '2022-06-02 09:16:01', 1),
+(8, 23, 19, 'Persetujuan Pembangunan', 'Pembangunan wisata Sarangan disetujui.', '2022-06-02 09:17:36', 1),
+(13, 23, 19, 'Pemberitahuan Pembangunan', 'Pembangunan wisata Sarangan sudah selesai. <br>Apabila desa ingin melakukan pembangunan lagi pada pariwisata ini silahkan masukkan ulang data destinasi Sarangan', '2022-06-03 02:15:07', 1),
+(14, 23, 19, 'Pemberitahuan Pembangunan', 'Pembangunan wisata Nongko Ijo sudah selesai. <br>Apabila desa ingin melakukan pembangunan lagi pada pariwisata ini silahkan masukkan ulang data destinasi Nongko Ijo', '2022-06-03 02:16:43', 1),
+(15, 23, 19, 'Pemberitahuan Pembangunan', 'Pembangunan wisata Air Terjun Slamir sudah selesai. <br>Apabila desa ingin melakukan pembangunan lagi pada pariwisata ini silahkan masukkan ulang data destinasi Air Terjun Slamir', '2022-06-03 14:38:18', 1);
 
 -- --------------------------------------------------------
 
@@ -149,7 +191,6 @@ CREATE TABLE `tb_pariwisata` (
   `id_user` int(11) NOT NULL,
   `tgl` date NOT NULL DEFAULT current_timestamp(),
   `nm_pariwisata` varchar(255) NOT NULL,
-  `alamat` varchar(255) NOT NULL,
   `id_status` int(11) NOT NULL,
   `built_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -158,11 +199,12 @@ CREATE TABLE `tb_pariwisata` (
 -- Dumping data for table `tb_pariwisata`
 --
 
-INSERT INTO `tb_pariwisata` (`id_pariwisata`, `id_user`, `tgl`, `nm_pariwisata`, `alamat`, `id_status`, `built_status`) VALUES
-(15, 19, '2022-04-28', 'Nongko Ijo', 'Desa Kare, Kecamatan Kare, Madiun, Jawa Timur', 1, 0),
-(19, 24, '2022-05-08', 'Air Terjun Banyulawe Dong', 'Dusun Gligi, Desa Kepel, Kecamatan Kare, Madiun', 1, 0),
-(21, 19, '2022-05-09', 'Air Terjun Slamir', 'Dusun Seweru, Desa Kare, Kec. Kare, Kab. Madiun, Jawa Timur', 0, 0),
-(22, 24, '2022-05-10', 'Air Terjun Krecekan Denu', 'Dusun Glingingan, Desa Kepel, Kecamatan Kare, Kabupaten Madiun, Jawa Timur', 0, 0);
+INSERT INTO `tb_pariwisata` (`id_pariwisata`, `id_user`, `tgl`, `nm_pariwisata`, `id_status`, `built_status`) VALUES
+(15, 19, '2022-04-28', 'Nongko Ijo', 1, 2),
+(19, 24, '2022-05-08', 'Air Terjun Banyulawe Dong', 1, 1),
+(21, 19, '2022-05-09', 'Air Terjun Slamir', 1, 2),
+(22, 24, '2022-05-10', 'Air Terjun Krecekan Denu', 1, 1),
+(26, 19, '2022-06-02', 'Sarangan', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -182,6 +224,26 @@ CREATE TABLE `tb_status` (
 INSERT INTO `tb_status` (`id_status`, `status`) VALUES
 (0, 'Tidak Valid'),
 (1, 'Valid');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_sts_pemb`
+--
+
+CREATE TABLE `tb_sts_pemb` (
+  `id_sts_pemb` int(11) NOT NULL,
+  `sts_pemb` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_sts_pemb`
+--
+
+INSERT INTO `tb_sts_pemb` (`id_sts_pemb`, `sts_pemb`) VALUES
+(0, 'Belum Dibangun'),
+(1, 'Sedang Dibangun'),
+(2, 'Telah Dibangun');
 
 -- --------------------------------------------------------
 
@@ -271,7 +333,8 @@ INSERT INTO `tb_user` (`id_user`, `username`, `name`, `email`, `password`, `telp
 (18, 'Admin2', 'Muhammad Kalandra', 'dispar@yahoo.com', '$2y$10$oiM4dOO1nWdcY/9a.ghWsO8LE218s2.qq/ecv6P8XtDOeyKvi5BIK', '0878347863546', 1, 'default.png'),
 (19, 'Ardianita', 'Kare', 'desa@yahoo.com', '$2y$10$lytQUT6oNR7iI8vVptmxSuTfZc8fOT7xlFKt1xNiFZ3BslFxVW.je', '0878347863546', 2, 'default.png'),
 (23, 'Administrator', 'Zahid Azmi', 'dinas@gmail.com', '$2y$10$wifMwXXL1DoaXJ9qmQWxB.J676BkLQUMh2Yq2Q/7GJpRl59n5Mjae', '087834528312', 1, 'dinas@gmailcom.png'),
-(24, 'Arsenio', 'Kepel', 'madi@gmail.com', '$2y$10$wAIeHpyY2nKQmVJAljYVt.uvqzsxSUz39FYPIXasph.AT6B42iJuy', '083874858555', 2, 'default.png');
+(24, 'Arsenio', 'Kepel', 'madi@gmail.com', '$2y$10$wAIeHpyY2nKQmVJAljYVt.uvqzsxSUz39FYPIXasph.AT6B42iJuy', '083874858555', 2, 'default.png'),
+(39, 'Admin', 'Ardianita Fauziyah', 'ardianitaf@student.uns.ac.id', '$2y$10$IYPIsh671QE3t5HEBWWbt.70HQ7g4i4pKpu2dSotgBEhq2Em4/Hkm', '083874858873', 1, 'default.png');
 
 --
 -- Indexes for dumped tables
@@ -299,18 +362,33 @@ ALTER TABLE `tb_nilai`
   ADD KEY `id_subkriteria` (`id_subkriteria`);
 
 --
+-- Indexes for table `tb_notif`
+--
+ALTER TABLE `tb_notif`
+  ADD PRIMARY KEY (`id_notif`),
+  ADD KEY `id_user` (`from_user_id`),
+  ADD KEY `id_pariwisata` (`user_id`);
+
+--
 -- Indexes for table `tb_pariwisata`
 --
 ALTER TABLE `tb_pariwisata`
   ADD PRIMARY KEY (`id_pariwisata`),
   ADD KEY `id_status` (`id_status`),
-  ADD KEY `id_user` (`id_user`);
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `built_status` (`built_status`);
 
 --
 -- Indexes for table `tb_status`
 --
 ALTER TABLE `tb_status`
   ADD PRIMARY KEY (`id_status`);
+
+--
+-- Indexes for table `tb_sts_pemb`
+--
+ALTER TABLE `tb_sts_pemb`
+  ADD PRIMARY KEY (`id_sts_pemb`);
 
 --
 -- Indexes for table `tb_subkriteria`
@@ -340,13 +418,19 @@ ALTER TABLE `tb_kriteria`
 -- AUTO_INCREMENT for table `tb_nilai`
 --
 ALTER TABLE `tb_nilai`
-  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
+
+--
+-- AUTO_INCREMENT for table `tb_notif`
+--
+ALTER TABLE `tb_notif`
+  MODIFY `id_notif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tb_pariwisata`
 --
 ALTER TABLE `tb_pariwisata`
-  MODIFY `id_pariwisata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_pariwisata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tb_subkriteria`
@@ -358,7 +442,7 @@ ALTER TABLE `tb_subkriteria`
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id_user` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_user` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables
@@ -373,11 +457,19 @@ ALTER TABLE `tb_nilai`
   ADD CONSTRAINT `tb_nilai_ibfk_3` FOREIGN KEY (`id_subkriteria`) REFERENCES `tb_subkriteria` (`id_subkriteria`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `tb_notif`
+--
+ALTER TABLE `tb_notif`
+  ADD CONSTRAINT `tb_notif_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_notif_ibfk_2` FOREIGN KEY (`from_user_id`) REFERENCES `tb_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `tb_pariwisata`
 --
 ALTER TABLE `tb_pariwisata`
   ADD CONSTRAINT `tb_pariwisata_ibfk_1` FOREIGN KEY (`id_status`) REFERENCES `tb_status` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pariwisata_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_pariwisata_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_pariwisata_ibfk_3` FOREIGN KEY (`built_status`) REFERENCES `tb_sts_pemb` (`id_sts_pemb`);
 
 --
 -- Constraints for table `tb_subkriteria`
