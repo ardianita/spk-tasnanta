@@ -14,12 +14,22 @@
                             <th>No</th>
                             <th>Nama Destinasi Wisata</th>
                             <th>Nama Desa</th>
+                            <th>Status Pembangunan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no = 1;
-                        foreach ($wisata as $w) : ?>
-                            <?php if ($w['built_status'] == 1) { ?>
+                        foreach ($wisata as $w) :
+                            if ($w['built_status'] == 0) {
+                                $w['built_status'] = '<button class="btn btn-danger btn-sm">Belum Dibangun</button>';
+                            } else if ($w['built_status'] == 1) {
+                                $w['built_status'] = '<button class="btn btn-warning btn-sm">Akan Dibangun</button>';
+                            } else {
+                                $w['built_status'] = '<button class="btn btn-success btn-sm">Telah Dibangun</button>';
+                            }
+                        ?>
+                            <?php if ($w['built_status'] != 0) { ?>
                                 <tr>
                                     <td><?= $no++; ?></td>
                                     <td><?= $w['nm_pariwisata']; ?></td>
@@ -28,6 +38,10 @@
                                             <td><?= $p['name']; ?></td>
                                     <?php }
                                     endforeach; ?>
+                                    <td><?= $w['built_status']; ?></td>
+                                    <td>
+                                        <a class="btn btn-outline-success btn-sm" href="<?= base_url('dinas/pembangunan/') . $w['id_pariwisata']; ?>"><i class="fas fa-fw fa-check"></i></a>
+                                    </td>
                                 </tr>
                         <?php }
                         endforeach; ?>

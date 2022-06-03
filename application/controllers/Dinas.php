@@ -14,14 +14,12 @@ class dinas extends CI_Controller
     public function index()
     {
 
-        $data['title'] = 'Dashboard Dinas';
+        $data['title'] = 'Dashboard';
         $data['admin'] = $this->M_Dinas->getDataDinas();
-        $data['pengguna'] = $this->M_Dinas->getDataUser();
-        $data['wisata'] = $this->M_Desa->getWisata();
-        $data['status'] = $this->M_Dinas->getStatus();
-        $data['kriteria'] = $this->M_Kriteria->getAllKriteria();
-        $data['subkriteria'] = $this->M_Kriteria->getAllSubkriteria();
-        $data['nilai'] = $this->M_Desa->getPariwisataWithNilai();
+        $data['dinas'] = $this->M_Dinas->getCountDinas($data['admin']['id_level'] == 1);
+        $data['desa'] = $this->M_Dinas->getCountDesa($data['admin']['id_level'] == 2);
+        $data['wisata'] = $this->M_Dinas->getCountWisata();
+        $data['data_desa'] = $this->M_Dinas->getCountDataDesa($data['admin']['id_level'] == 2);
 
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_dinas', $data);
@@ -109,8 +107,9 @@ class dinas extends CI_Controller
         $data['title'] = 'Edit Profile';
         $data['admin'] = $this->M_Dinas->getDataDinas();
 
-        $this->form_validation->set_rules('username', 'Username', 'required|trim', [
-            'required'  => 'Username Wajib Diisi!'
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[tb_user.username]', [
+            'required'  => 'Username Wajib Diisi!',
+            'is_unique' => 'Username Sudah Ada!'
         ]);
         $this->form_validation->set_rules('name', 'Nama Lengkap', 'required', [
             'required'  => 'Nama Lengkap Wajib Diisi!'
@@ -158,8 +157,9 @@ class dinas extends CI_Controller
             'required'  => 'Email Wajib Diisi!',
             'is_unique'  => 'Email Sudah Terdaftar!'
         ]);
-        $this->form_validation->set_rules('username', 'Username', 'required|trim', [
-            'required'  => 'Username Wajib Diisi!'
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[tb_user.username]', [
+            'required'  => 'Username Wajib Diisi!',
+            'is_unique' => 'Username Sudah Ada!'
         ]);
         $this->form_validation->set_rules('name',  $argument ? 'Nama Desa' : 'Nama Lengkap', 'required', [
             'required'  => $argument ? 'Nama Desa Wajib Diisi!' : 'Nama Lengkap Wajib Diisi!'
@@ -193,8 +193,9 @@ class dinas extends CI_Controller
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email', [
             'required'  => 'Email Wajib Diisi!',
         ]);
-        $this->form_validation->set_rules('username', 'Username', 'trim|required', [
-            'required'  => 'Username Wajib Diisi!'
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|is_unique[tb_user.username]', [
+            'required'  => 'Username Wajib Diisi!',
+            'is_unique'  => 'Username Sudah Ada!'
         ]);
         $this->form_validation->set_rules('name',  $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap' : 'Nama Desa', 'required', [
             'required'  => $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap Wajib Diisi!' : 'Nama Desa Wajib Diisi!'
@@ -273,6 +274,18 @@ class dinas extends CI_Controller
         $this->load->view('template/sidebar_dinas', $data);
         $this->load->view('pembangunan/index', $data);
         $this->load->view('template/footer');
+    }
+
+    public function pembangunan($id_pariwisata)
+    {
+        $data['title'] = 'Pembangunan';
+        $data['admin'] = $this->M_Dinas->getDataDinas();
+        $data['wisata'] = $this->M_Desa->getWisata();
+        $data['pengguna'] = $this->M_Dinas->getDataUser();
+
+        $this->M_Dinas->check_sts_pem($id_pariwisata);
+        $this->session->set_flashdata('pesan', '<div class="alert alert-info alert-dismissible fade show" role="alert">Status pembangunan telah diubah!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        redirect('dinas/tampil_pembangunan');
     }
 
     public function ubah_pembangunan($id_pariwisata)

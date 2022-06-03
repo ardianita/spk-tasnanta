@@ -28,6 +28,39 @@ class M_Dinas extends CI_model
         return $this->db->get('tb_status')->result_array();
     }
 
+    public function getCountWisata()
+    {
+        $query = $this->db->get('tb_pariwisata');
+        return $query->num_rows();
+    }
+
+    public function getCountDinas()
+    {
+        $this->db->select('*');
+        $this->db->from('tb_user');
+        $this->db->where('id_level', 1);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function getCountDesa()
+    {
+        $this->db->select('*');
+        $this->db->from('tb_user');
+        $this->db->where('id_level', 2);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function getCountDataDesa()
+    {
+        $this->db->select('name');
+        $this->db->from('tb_user');
+        $this->db->where('id_level', 2);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
     public function tambah_user()
     {
         $data = array(
@@ -176,5 +209,22 @@ class M_Dinas extends CI_model
 
         $user = $this->db->get_where('tb_user', ['email' => $email])->row_array();
         $this->send_notif($user['id_user'], $pariwisata['id_user'], 'Persetujuan Pembangunan', 'Pembangunan wisata ' . $pariwisata['nm_pariwisata'] . ' disetujui.');
+    }
+
+    public function check_sts_pem($id_pariwisata)
+    {
+        $built_status  = 2;
+
+        $data = array(
+            'built_status'  => $built_status,
+        );
+
+        $this->db->where('id_pariwisata', $id_pariwisata);
+        $this->db->update('tb_pariwisata', $data);
+
+        $pariwisata = $this->db->get_where('tb_pariwisata', ['id_pariwisata' => $id_pariwisata])->row_array();
+        $email = $this->session->userdata('email');
+        $user = $this->db->get_where('tb_user', ['email' => $email])->row_array();
+        $this->send_notif($user['id_user'], $pariwisata['id_user'], 'Pemberitahuan Pembangunan', 'Pembangunan wisata ' . $pariwisata['nm_pariwisata'] . ' sudah selesai. <br>Apabila desa ingin melakukan pembangunan lagi pada pariwisata ini silahkan masukkan ulang data destinasi ' . $pariwisata['nm_pariwisata']);
     }
 }

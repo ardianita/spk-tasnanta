@@ -40,8 +40,9 @@ class desa extends CI_Controller
         $data['user'] = $this->M_Desa->getDataByEmail();
         $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
-        $this->form_validation->set_rules('username', 'Username', 'required|trim', [
-            'required'  => 'Username Wajib Diisi!'
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[tb_user.username]', [
+            'required'  => 'Username Wajib Diisi!',
+            'is_unique'  => 'Username Sudah Ada!'
         ]);
         $this->form_validation->set_rules('name',  'Nama Desa', 'required', [
             'required'  => 'Nama Desa Wajib Diisi!'
@@ -135,9 +136,8 @@ class desa extends CI_Controller
         $data['nilai'] = $this->M_Desa->getNilaiByPariwisata();
         $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
-        $this->form_validation->set_rules('nm_pariwisata', 'Nama Destinasi Wisata', 'required|is_unique[tb_pariwisata.nm_pariwisata]', [
-            'required'  => 'Nama Destinasi Wisata Wajib Diisi!',
-            'is_unique' => 'Destinasi Wisata Sudah Ada!'
+        $this->form_validation->set_rules('nm_pariwisata', 'Nama Destinasi Wisata', 'required', [
+            'required'  => 'Nama Destinasi Wisata Wajib Diisi!'
         ]);
 
         $dropdown[''] = '';

@@ -31,9 +31,11 @@
                             }
 
                             if ($w['built_status'] == 0) {
-                                $w['built_status'] = '<button class="btn btn-danger btn-sm">Tidak</button>';
+                                $w['built_status'] = '<button class="btn btn-danger btn-sm">Belum Dibangun</button>';
+                            } else if ($w['built_status'] == 1) {
+                                $w['built_status'] = '<button class="btn btn-warning btn-sm">Akan Dibangun</button>';
                             } else {
-                                $w['built_status'] = '<button class="btn btn-success btn-sm">Ya</button>';
+                                $w['built_status'] = '<button class="btn btn-success btn-sm">Telah Dibangun</button>';
                             }
                             ?>
                             <tr>
@@ -53,7 +55,7 @@
                                         foreach ($n['nilai'] as $n2) : ?>
                                         <?php endforeach; ?>
                                         <?php if ($w['id_pariwisata'] == $n2['id_pariwisata']) { ?>
-                                            <a class="btn btn-primary" data-toggle="modal" data-target="#detailModalWis<?= $n2['id_pariwisata'] ?>"><i class="fas fa-fw fa-eye"></i></a>
+                                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModalWis<?= $n2['id_pariwisata'] ?>"><i class="fas fa-fw fa-eye"></i></a>
                                     <?php }
                                     } ?>
                                 </td>
