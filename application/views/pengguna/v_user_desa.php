@@ -6,7 +6,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Data Pengguna Desa</h6>
         </div>
         <div class="card-body">
-            <a class="btn btn-primary" href="<?= base_url('dinas/tambah_pengguna/desa'); ?>"><i class="fas fa-fw fa-plus"></i> Tambah Pengguna</a>
+            <a class="btn btn-primary btn-sm" href="<?= base_url('dinas/tambah_pengguna/desa'); ?>"><i class="fas fa-fw fa-plus"></i> Tambah Pengguna</a>
             <div class="table-responsive my-3">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -36,8 +36,8 @@
                                 <td>Desa</td>
                                 <td><?= $p['telp']; ?></td>
                                 <td>
-                                    <a href="<?= base_url('dinas/edit_pengguna/') . $p['id_user']; ?>" class="btn btn-success"><i class="fas fa-fw fa-edit"></i></a>
-                                    <a class="btn btn-danger" data-toggle="modal" data-target=<?= "#hapusUser" . $p['id_user'] ?>><i class="fas fa-fw fa-trash"></i></a>
+                                    <a href="<?= base_url('dinas/edit_pengguna/') . $p['id_user']; ?>" class="btn btn-success btn-sm"><i class="fas fa-fw fa-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm" data-toggle="modal" data-target=<?= "#hapusUser" . $p['id_user'] ?>><i class="fas fa-fw fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
