@@ -161,8 +161,9 @@ class dinas extends CI_Controller
             'required'  => 'Username Wajib Diisi!',
             'is_unique' => 'Username Sudah Ada!'
         ]);
-        $this->form_validation->set_rules('name',  $argument ? 'Nama Desa' : 'Nama Lengkap', 'required', [
-            'required'  => $argument ? 'Nama Desa Wajib Diisi!' : 'Nama Lengkap Wajib Diisi!'
+        $this->form_validation->set_rules('name',  $argument ? 'Nama Desa' : 'Nama Lengkap', 'required|regex_match[/^([a-z ])+$/i]', [
+            'required'  => $argument ? 'Nama Desa Wajib Diisi!' : 'Nama Lengkap Wajib Diisi!',
+            'regex_match'   => $argument ? 'Nama Desa Harus Huruf!' : 'Nama Lengkap Harus Huruf!'
         ]);
         $this->form_validation->set_rules('telp', 'Telp', 'required|trim', [
             'required'  => 'Nomor Telepon Wajib Diisi!'
@@ -193,12 +194,13 @@ class dinas extends CI_Controller
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email', [
             'required'  => 'Email Wajib Diisi!',
         ]);
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|is_unique[tb_user.username]', [
+        $this->form_validation->set_rules('username', 'Username', 'trim|required', [
             'required'  => 'Username Wajib Diisi!',
             'is_unique'  => 'Username Sudah Ada!'
         ]);
-        $this->form_validation->set_rules('name',  $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap' : 'Nama Desa', 'required', [
-            'required'  => $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap Wajib Diisi!' : 'Nama Desa Wajib Diisi!'
+        $this->form_validation->set_rules('name',  $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap' : 'Nama Desa', 'required|regex_match[/^([a-z ])+$/i]', [
+            'required'  => $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap Wajib Diisi!' : 'Nama Desa Wajib Diisi!',
+            'regex_match'   => $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap Harus Huruf!' : 'Nama Desa Harus Huruf!',
         ]);
         $this->form_validation->set_rules('telp', 'Telp', 'required|trim|numeric', [
             'required'  => 'Nomor Telepon Wajib Diisi!',

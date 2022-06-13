@@ -136,8 +136,9 @@ class desa extends CI_Controller
         $data['nilai'] = $this->M_Desa->getNilaiByPariwisata();
         $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
-        $this->form_validation->set_rules('nm_pariwisata', 'Nama Destinasi Wisata', 'required', [
-            'required'  => 'Nama Destinasi Wisata Wajib Diisi!'
+        $this->form_validation->set_rules('nm_pariwisata', 'Nama Destinasi Wisata', 'required|regex_match[/^([a-z ])+$/i]', [
+            'required'  => 'Nama Destinasi Wisata Wajib Diisi!',
+            'regex_match'   => 'Nama Destinasi Wisata Harus Huruf!'
         ]);
 
         $dropdown[''] = '';

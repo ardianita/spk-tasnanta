@@ -30,15 +30,17 @@ class Kriteria extends CI_Controller
         $data['title'] = 'Tambah Kriteria Pembangunan';
         $data['admin'] = $this->M_Dinas->getDataDinas();
 
-        $this->form_validation->set_rules('nm_kriteria', 'Kriteria', 'required', [
-            'required' => 'Kriteria Wajib Diisi!'
+        $this->form_validation->set_rules('nm_kriteria', 'Kriteria', 'required|regex_match[/^([a-z ])+$/i]', [
+            'required' => 'Kriteria Wajib Diisi!',
+            'regex_match' => 'Kriteria Haruf Huruf!',
         ]);
         $this->form_validation->set_rules('j_kriteria', 'Jenis', 'required', [
             'required'  => 'Jenis Kriteria Wajib Diisi!'
         ]);
-        $this->form_validation->set_rules('bobot_kriteria', 'Bobot', 'required|numeric|trim', [
+        $this->form_validation->set_rules('bobot_kriteria', 'Bobot', 'required|numeric|trim|less_than_equal_to[100]', [
             'required'  => 'Bobot Kriteria Wajib Diisi!',
-            'numeric'   => 'Bobot Kriteria Harus Angka!'
+            'numeric'   => 'Bobot Kriteria Harus Angka!',
+            'less_than_equal_to'    => 'Bobot Antara 0 - 100'
         ]);
 
         if ($this->form_validation->run() == false) {
@@ -66,15 +68,17 @@ class Kriteria extends CI_Controller
         $data['admin'] = $this->M_Dinas->getDataDinas();
         $data['kriteria'] = $this->M_Kriteria->getKriteriaById($id_kriteria);
 
-        $this->form_validation->set_rules('nm_kriteria', 'Kriteria', 'required', [
+        $this->form_validation->set_rules('nm_kriteria', 'Kriteria', 'required|regex_match[/^([a-z ])+$/i]', [
             'required'  => 'Kriteria Wajib Diisi!',
+            'regex_match' => 'Kriteria Haruf Huruf!',
         ]);
         $this->form_validation->set_rules('j_kriteria', 'Jenis', 'required', [
             'required'  => 'Jenis Kriteria Wajib Diisi!'
         ]);
-        $this->form_validation->set_rules('bobot_kriteria', 'Bobot Kriteria', 'required|numeric|trim', [
+        $this->form_validation->set_rules('bobot_kriteria', 'Bobot Kriteria', 'required|numeric|trim|less_than_equal_to[100]', [
             'required'  => 'Bobot Kriteria Wajib Diisi!',
-            'numeric'   => 'Bobot Kriteria Harus Angka!'
+            'numeric'   => 'Bobot Kriteria Harus Angka!',
+            'less_than_equal_to'    => 'Bobot Antara 0 - 100'
         ]);
 
         if ($this->form_validation->run() == FALSE) {
@@ -110,12 +114,14 @@ class Kriteria extends CI_Controller
         $this->form_validation->set_rules('id_kriteria', 'Kriteria', 'required', [
             'required'  => 'Kriteria Wajib Diisi!',
         ]);
-        $this->form_validation->set_rules('nm_subkriteria', 'Subkriteria', 'required', [
-            'required'  => 'Subkriteria Wajib Diisi!'
+        $this->form_validation->set_rules('nm_subkriteria', 'Subkriteria', 'required|regex_match[/^([a-z ])+$/i]', [
+            'required'  => 'Subkriteria Wajib Diisi!',
+            'regex_match'  => 'Subkriteria Haruf Huruf!'
         ]);
-        $this->form_validation->set_rules('nilai', 'Nilai Subkriteria', 'required|trim|numeric', [
+        $this->form_validation->set_rules('nilai', 'Nilai Subkriteria', 'required|trim|numeric|less_than_equal_to[100]', [
             'required'  => 'Nilai Wajib Diisi!',
-            'numeric'   => 'Nilai Harus Angka!'
+            'numeric'   => 'Nilai Harus Angka!',
+            'less_than_equal_to'    => 'Nilai Antara 0 - 100'
         ]);
 
         if ($this->form_validation->run() == false) {
@@ -147,12 +153,14 @@ class Kriteria extends CI_Controller
         $this->form_validation->set_rules('id_kriteria', 'Kriteria', 'required', [
             'required'  => 'Kriteria Wajib Diisi!',
         ]);
-        $this->form_validation->set_rules('nm_subkriteria', 'Subkriteria', 'required', [
-            'required'  => 'Subkriteria Wajib Diisi!'
+        $this->form_validation->set_rules('nm_subkriteria', 'Subkriteria', 'required|regex_match[/^([a-z ])+$/i]', [
+            'required'  => 'Subkriteria Wajib Diisi!',
+            'regex_match'  => 'Subkriteria Harus Huruf!',
         ]);
-        $this->form_validation->set_rules('nilai', 'Nilai', 'required|trim|numeric', [
-            'required'  => 'Nilai Wajib Diisi!',
-            'numeric'   => 'Nilai Harus Angka!'
+        $this->form_validation->set_rules('nilai', 'Nilai', 'required|trim|numeric|less_than_equal_to[100]', [
+            'required'             => 'Nilai Wajib Diisi!',
+            'numeric'              => 'Nilai Harus Angka!',
+            'less_than_equal_to'   => 'Nilai Antara 0 - 100'
         ]);
 
         if ($this->form_validation->run() == FALSE) {
