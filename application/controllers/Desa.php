@@ -74,12 +74,14 @@ class desa extends CI_Controller
             'required'  => 'Password Wajib Diisi!'
         ]);
         $this->form_validation->set_rules('password_baru1', 'Password Baru', 'required|trim|min_length[6]|matches[password_baru2]', [
-            'required'  => 'Password Baru Wajib Diisi!',
-            'matches'   => 'Password Tidak Sama!'
+            'required'      => 'Password Baru Wajib Diisi!',
+            'matches'       => 'Password Tidak Sama!',
+            'min_length'    => 'Password kurang dari 6 karakter!'
         ]);
-        $this->form_validation->set_rules('password_baru2', 'Confirm Password Baru', 'required|trim|matches[password_baru1]', [
+        $this->form_validation->set_rules('password_baru2', 'Confirm Password Baru', 'required|trim|min_length[6]|matches[password_baru1]', [
             'required'  => 'Ulangi Password Baru!',
-            'matches'   => 'Password Tidak Sama!'
+            'matches'   => 'Password Tidak Sama!',
+            'min_length'    => 'Password kurang dari 6 karakter!'
         ]);
 
         if ($this->form_validation->run() == false) {
@@ -174,8 +176,9 @@ class desa extends CI_Controller
         $data['subkriteria'] = $this->M_Kriteria->getAllSubkriteria();
         $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
-        $this->form_validation->set_rules('nm_pariwisata', 'Nama Destinasi Wisata', 'required', [
+        $this->form_validation->set_rules('nm_pariwisata', 'Nama Destinasi Wisata', 'required|regex_match[/^([a-z ])+$/i]', [
             'required'  => 'Nama Destinasi Wisata Wajib Diisi!',
+            'regex_match'   => 'Nama Destinasi Wisata Harus Huruf!'
         ]);
 
         if ($this->form_validation->run() == FALSE) {

@@ -34,7 +34,7 @@ class Kriteria extends CI_Controller
             'required' => 'Kriteria Wajib Diisi!',
             'regex_match' => 'Kriteria Haruf Huruf!',
         ]);
-        $this->form_validation->set_rules('j_kriteria', 'Jenis', 'required', [
+        $this->form_validation->set_rules('j_kriteria', 'Jenis Kriteria', 'required', [
             'required'  => 'Jenis Kriteria Wajib Diisi!'
         ]);
         $this->form_validation->set_rules('bobot_kriteria', 'Bobot', 'required|numeric|trim|less_than_equal_to[100]', [
@@ -72,7 +72,7 @@ class Kriteria extends CI_Controller
             'required'  => 'Kriteria Wajib Diisi!',
             'regex_match' => 'Kriteria Haruf Huruf!',
         ]);
-        $this->form_validation->set_rules('j_kriteria', 'Jenis', 'required', [
+        $this->form_validation->set_rules('j_kriteria', 'Jenis Kriteria', 'required', [
             'required'  => 'Jenis Kriteria Wajib Diisi!'
         ]);
         $this->form_validation->set_rules('bobot_kriteria', 'Bobot Kriteria', 'required|numeric|trim|less_than_equal_to[100]', [

@@ -37,12 +37,14 @@ class dinas extends CI_Controller
             'required'  => 'Password Wajib Diisi!'
         ]);
         $this->form_validation->set_rules('password_baru1', 'Password Baru', 'required|trim|min_length[6]|matches[password_baru2]', [
-            'required'  => 'Password Baru Wajib Diisi!',
-            'matches'   => 'Password Tidak Sama!'
+            'required'      => 'Password Baru Wajib Diisi!',
+            'matches'       => 'Password Tidak Sama!',
+            'min_length'    => 'Password kurang dari 6 karakter!'
         ]);
-        $this->form_validation->set_rules('password_baru2', 'Confirm Password Baru', 'required|trim|matches[password_baru1]', [
+        $this->form_validation->set_rules('password_baru2', 'Confirm Password Baru', 'required|trim|min_length[6]|matches[password_baru1]', [
             'required'  => 'Ulangi Password Baru!',
-            'matches'   => 'Password Tidak Sama!'
+            'matches'   => 'Password Tidak Sama!',
+            'min_length'    => 'Password kurang dari 6 karakter!'
         ]);
 
         if ($this->form_validation->run() == false) {
@@ -154,8 +156,9 @@ class dinas extends CI_Controller
         $data['argument'] = $argument;
 
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[tb_user.email]', [
-            'required'  => 'Email Wajib Diisi!',
-            'is_unique'  => 'Email Sudah Terdaftar!'
+            'required'      => 'Email Wajib Diisi!',
+            'valid_email'   => 'Email Tidak Valid!',
+            'is_unique'     => 'Email Sudah Terdaftar!'
         ]);
         $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[tb_user.username]', [
             'required'  => 'Username Wajib Diisi!',
@@ -165,11 +168,13 @@ class dinas extends CI_Controller
             'required'  => $argument ? 'Nama Desa Wajib Diisi!' : 'Nama Lengkap Wajib Diisi!',
             'regex_match'   => $argument ? 'Nama Desa Harus Huruf!' : 'Nama Lengkap Harus Huruf!'
         ]);
-        $this->form_validation->set_rules('telp', 'Telp', 'required|trim', [
-            'required'  => 'Nomor Telepon Wajib Diisi!'
+        $this->form_validation->set_rules('telp', 'Telp', 'required|trim|numeric', [
+            'required'  => 'Nomor Telepon Wajib Diisi!',
+            'numeric'   => 'Nomor Telepon Harus Angka!'
         ]);
-        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]|max_length[8]', [
-            'required'  => 'Password Wajib Diisi!'
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]', [
+            'required'      => 'Password Wajib Diisi!',
+            'min_length'    => 'Password Kurang Dari 6 Karakter!'
         ]);
 
         if ($this->form_validation->run() == FALSE) {
@@ -193,10 +198,10 @@ class dinas extends CI_Controller
 
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email', [
             'required'  => 'Email Wajib Diisi!',
+            'valid_email'   => 'Email Tidak Valid!'
         ]);
         $this->form_validation->set_rules('username', 'Username', 'trim|required', [
             'required'  => 'Username Wajib Diisi!',
-            'is_unique'  => 'Username Sudah Ada!'
         ]);
         $this->form_validation->set_rules('name',  $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap' : 'Nama Desa', 'required|regex_match[/^([a-z ])+$/i]', [
             'required'  => $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap Wajib Diisi!' : 'Nama Desa Wajib Diisi!',
@@ -221,9 +226,12 @@ class dinas extends CI_Controller
 
     public function hapus_pengguna($id_user)
     {
+        $data['pengguna'] = $this->M_Dinas->getUserById($id_user);
+        $data['argument'] = $data['pengguna']['id_level'] == 1 ? 'dinas' : 'desa';
+
         $this->M_Dinas->hapus_user($id_user);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Pengguna berhasil dihapus!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        redirect('dinas/pengguna');
+        redirect('dinas/pengguna/' . $data['argument']);
     }
 
     public function tampil_validasi()

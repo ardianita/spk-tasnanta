@@ -18,6 +18,7 @@
                         <option value="Benefit" <?= set_select('j_kriteria', 'Benefit'); ?>>Benefit</option>
                         <option value="Cost" <?= set_select('j_kriteria', 'Cost'); ?>>Cost</option>
                     </select>
+                    <?= form_error('j_kriteria', '<div class="text-danger small">', '</div>') ?>
                 </div>
                 <div class="form-group">
                     <label>Bobot</label>
