@@ -21,30 +21,28 @@
                     <tbody>
                         <?php $no = 1;
                         foreach ($wisata as $w) :
-                            if ($w['built_status'] == 0) {
-                                $w['built_status'] = '<button class="btn btn-danger btn-sm">Belum Dibangun</button>';
-                            } else if ($w['built_status'] == 1) {
-                                $w['built_status'] = '<button class="btn btn-warning btn-sm">Akan Dibangun</button>';
+                            if ($w['id_built_status'] == 0) {
+                                $w['id_built_status'] = '<button class="btn btn-danger btn-sm">Belum Dibangun</button>';
+                            } else if ($w['id_built_status'] == 1) {
+                                $w['id_built_status'] = '<button class="btn btn-warning btn-sm">Akan Dibangun</button>';
                             } else {
-                                $w['built_status'] = '<button class="btn btn-success btn-sm">Telah Dibangun</button>';
+                                $w['id_built_status'] = '<button class="btn btn-success btn-sm">Telah Dibangun</button>';
                             }
                         ?>
-                            <?php if ($w['built_status'] != 0) { ?>
-                                <tr>
-                                    <td><?= $no++; ?></td>
-                                    <td><?= $w['nm_pariwisata']; ?></td>
-                                    <?php foreach ($pengguna as $p) :
-                                        if ($w['id_user'] == $p['id_user']) { ?>
-                                            <td><?= $p['name']; ?></td>
-                                    <?php }
-                                    endforeach; ?>
-                                    <td><?= $w['built_status']; ?></td>
-                                    <td>
-                                        <a class="btn btn-outline-success btn-sm" href="<?= base_url('dinas/pembangunan/') . $w['id_pariwisata']; ?>"><i class="fas fa-fw fa-check"></i></a>
-                                    </td>
-                                </tr>
-                        <?php }
-                        endforeach; ?>
+                            <tr>
+                                <td><?= $no++; ?></td>
+                                <td><?= $w['nm_pariwisata']; ?></td>
+                                <?php foreach ($pengguna as $p) :
+                                    if ($w['id_user'] == $p['id_user']) { ?>
+                                        <td><?= $p['name']; ?></td>
+                                <?php }
+                                endforeach; ?>
+                                <td><?= $w['id_built_status']; ?></td>
+                                <td>
+                                    <a class="btn btn-outline-success btn-sm" href="<?= base_url('dinas/pembangunan/') . $w['id_pariwisata']; ?>"><i class="fas fa-fw fa-check"></i></a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

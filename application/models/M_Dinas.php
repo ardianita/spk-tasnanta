@@ -162,7 +162,7 @@ class M_Dinas extends CI_model
         $this->db->select('*');
         $this->db->from('tb_pariwisata');
         $this->db->where('id_status', '1');
-        $this->db->where('built_status', '0');
+        $this->db->where('id_built_status', '0');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -195,10 +195,10 @@ class M_Dinas extends CI_model
 
     public function ubah_status_p($id_pariwisata)
     {
-        $built_status  = 1;
+        $id_built_status  = 1;
 
         $data = array(
-            'built_status'  => $built_status,
+            'id_built_status'  => $id_built_status,
         );
 
         $this->db->where('id_pariwisata', $id_pariwisata);
@@ -213,10 +213,10 @@ class M_Dinas extends CI_model
 
     public function check_sts_pem($id_pariwisata)
     {
-        $built_status  = 2;
+        $id_built_status  = 2;
 
         $data = array(
-            'built_status'  => $built_status,
+            'id_built_status'  => $id_built_status,
         );
 
         $this->db->where('id_pariwisata', $id_pariwisata);

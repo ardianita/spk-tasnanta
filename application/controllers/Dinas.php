@@ -277,7 +277,7 @@ class dinas extends CI_Controller
     {
         $data['title'] = 'Pembangunan';
         $data['admin'] = $this->M_Dinas->getDataDinas();
-        $data['wisata'] = $this->M_Desa->getWisata();
+        $data['wisata'] = $this->M_Desa->getStatusBuiltWisata();
         $data['pengguna'] = $this->M_Dinas->getDataUser();
 
         $this->load->view('template/header', $data);
@@ -290,7 +290,7 @@ class dinas extends CI_Controller
     {
         $data['title'] = 'Pembangunan';
         $data['admin'] = $this->M_Dinas->getDataDinas();
-        $data['wisata'] = $this->M_Desa->getWisata();
+        $data['wisata'] = $this->M_Desa->getStatusBuiltWisata();
         $data['pengguna'] = $this->M_Dinas->getDataUser();
 
         $this->M_Dinas->check_sts_pem($id_pariwisata);

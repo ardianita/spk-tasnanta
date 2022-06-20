@@ -34,6 +34,15 @@ class M_Desa extends CI_Model
         return $this->db->get_where('tb_pariwisata', ['id_pariwisata' => $id_pariwisata])->row_array();
     }
 
+    public function getStatusBuiltWisata()
+    {
+        $this->db->select('*');
+        $this->db->from('tb_pariwisata');
+        $this->db->where(['id_built_status' => '1']);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function getNotif($user_id)
     {
         return $this->db->get_where('tb_notif', ['user_id' => $user_id])->num_rows();

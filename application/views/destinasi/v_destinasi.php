@@ -30,12 +30,12 @@
                                 $w['id_status'] = '<button class="btn btn-success btn-sm">Valid</button>';
                             }
 
-                            if ($w['built_status'] == 0) {
-                                $w['built_status'] = '<button class="btn btn-danger btn-sm">Belum Dibangun</button>';
-                            } else if ($w['built_status'] == 1) {
-                                $w['built_status'] = '<button class="btn btn-warning btn-sm">Akan Dibangun</button>';
+                            if ($w['id_built_status'] == 0) {
+                                $w['id_built_status'] = '<button class="btn btn-danger btn-sm">Belum Dibangun</button>';
+                            } else if ($w['id_built_status'] == 1) {
+                                $w['id_built_status'] = '<button class="btn btn-warning btn-sm">Akan Dibangun</button>';
                             } else {
-                                $w['built_status'] = '<button class="btn btn-success btn-sm">Telah Dibangun</button>';
+                                $w['id_built_status'] = '<button class="btn btn-success btn-sm">Telah Dibangun</button>';
                             }
                             ?>
                             <tr>
@@ -48,7 +48,7 @@
                                 <?php }
                                 endforeach; ?>
                                 <td><?= $w['id_status']; ?>
-                                <td><?= $w['built_status']; ?>
+                                <td><?= $w['id_built_status']; ?>
                                 </td>
                                 <td>
                                     <?php foreach ($nilai as $n) {
