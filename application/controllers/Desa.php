@@ -40,7 +40,7 @@ class desa extends CI_Controller
         $data['user'] = $this->M_Desa->getDataByEmail();
         $data['tot_notif'] = $this->M_Desa->getCountUserNotifUnread($data['user']['id_user']);
 
-        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[tb_user.username]', [
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|alpha|is_unique[tb_user.username]', [
             'required'  => 'Username Wajib Diisi!',
             'is_unique'  => 'Username Sudah Ada!'
         ]);
