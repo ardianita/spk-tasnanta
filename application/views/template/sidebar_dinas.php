@@ -52,9 +52,16 @@
 
         <!-- Nav Item -->
         <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('dinas/tampil_pembangunan') ?>">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-landmark"></i>
-                <span>Pembangunan</span></a>
+                <span>Pembangunan</span>
+            </a>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('dinas/tampil_pembangunan1') ?>">Sedang Dibangun</a>
+                    <a class="collapse-item" href="<?= base_url('dinas/tampil_pembangunan2'); ?>">Telah Dibangun</a>
+                </div>
+            </div>
         </li>
 
 

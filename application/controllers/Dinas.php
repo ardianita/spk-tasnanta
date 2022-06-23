@@ -273,29 +273,42 @@ class dinas extends CI_Controller
         $this->load->view('template/footer');
     }
 
-    public function tampil_pembangunan()
+    public function tampil_pembangunan1()
     {
         $data['title'] = 'Pembangunan';
         $data['admin'] = $this->M_Dinas->getDataDinas();
-        $data['wisata'] = $this->M_Desa->getStatusBuiltWisata();
+        $data['wisata'] = $this->M_Desa->getStatusWisata1();
         $data['pengguna'] = $this->M_Dinas->getDataUser();
 
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_dinas', $data);
-        $this->load->view('pembangunan/index', $data);
+        $this->load->view('pembangunan/pembangunan1', $data);
         $this->load->view('template/footer');
     }
 
-    public function pembangunan($id_pariwisata)
+    public function tampil_pembangunan2()
     {
         $data['title'] = 'Pembangunan';
         $data['admin'] = $this->M_Dinas->getDataDinas();
-        $data['wisata'] = $this->M_Desa->getStatusBuiltWisata();
+        $data['wisata'] = $this->M_Desa->getStatusWisata2();
+        $data['pengguna'] = $this->M_Dinas->getDataUser();
+
+        $this->load->view('template/header', $data);
+        $this->load->view('template/sidebar_dinas', $data);
+        $this->load->view('pembangunan/pembangunan2', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function pembangunan1($id_pariwisata)
+    {
+        $data['title'] = 'Pembangunan';
+        $data['admin'] = $this->M_Dinas->getDataDinas();
+        $data['wisata'] = $this->M_Desa->getStatusWisata1();
         $data['pengguna'] = $this->M_Dinas->getDataUser();
 
         $this->M_Dinas->check_sts_pem($id_pariwisata);
         $this->session->set_flashdata('pesan', '<div class="alert alert-info alert-dismissible fade show" role="alert">Status pembangunan telah diubah!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        redirect('dinas/tampil_pembangunan');
+        redirect('dinas/tampil_pembangunan2');
     }
 
     public function ubah_pembangunan($id_pariwisata)

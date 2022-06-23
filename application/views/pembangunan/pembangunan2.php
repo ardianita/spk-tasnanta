@@ -12,10 +12,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Waktu</th>
                             <th>Nama Destinasi Wisata</th>
                             <th>Nama Desa</th>
                             <th>Status Pembangunan</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,6 +31,7 @@
                         ?>
                             <tr>
                                 <td><?= $no++; ?></td>
+                                <td><?= format_indo($w['tgl']); ?></td>
                                 <td><?= $w['nm_pariwisata']; ?></td>
                                 <?php foreach ($pengguna as $p) :
                                     if ($w['id_user'] == $p['id_user']) { ?>
@@ -38,9 +39,6 @@
                                 <?php }
                                 endforeach; ?>
                                 <td><?= $w['id_built_status']; ?></td>
-                                <td>
-                                    <a class="btn btn-outline-success btn-sm" href="<?= base_url('dinas/pembangunan/') . $w['id_pariwisata']; ?>"><i class="fas fa-fw fa-check"></i></a>
-                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
