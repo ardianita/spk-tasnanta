@@ -109,7 +109,7 @@ class dinas extends CI_Controller
         $data['title'] = 'Edit Profile';
         $data['admin'] = $this->M_Dinas->getDataDinas();
 
-        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[tb_user.username]', [
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|alpha|is_unique[tb_user.username]', [
             'required'  => 'Username Wajib Diisi!',
             'is_unique' => 'Username Sudah Ada!'
         ]);
@@ -160,7 +160,7 @@ class dinas extends CI_Controller
             'valid_email'   => 'Email Tidak Valid!',
             'is_unique'     => 'Email Sudah Terdaftar!'
         ]);
-        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[tb_user.username]', [
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|alpha|is_unique[tb_user.username]', [
             'required'  => 'Username Wajib Diisi!',
             'is_unique' => 'Username Sudah Ada!'
         ]);
@@ -200,7 +200,7 @@ class dinas extends CI_Controller
             'required'  => 'Email Wajib Diisi!',
             'valid_email'   => 'Email Tidak Valid!'
         ]);
-        $this->form_validation->set_rules('username', 'Username', 'trim|required', [
+        $this->form_validation->set_rules('username', 'Username', 'trim|alpha|required', [
             'required'  => 'Username Wajib Diisi!',
         ]);
         $this->form_validation->set_rules('name',  $data['pengguna']['id_level'] == 1 ? 'Nama Lengkap' : 'Nama Desa', 'required|regex_match[/^([a-z ])+$/i]', [
