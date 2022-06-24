@@ -1,5 +1,5 @@
 <body class="bg-login-registrasi">
-    <img style="max-width: 15%; padding: 10px;" src="<?= base_url('assets/img/tasnanta depan.png'); ?>">
+    <img style="max-width: 15%; padding: 10px;" src="<?= base_url('assets/img/tasnanta-depan.png'); ?>">
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
