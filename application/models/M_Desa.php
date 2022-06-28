@@ -52,11 +52,6 @@ class M_Desa extends CI_Model
         return $query->result_array();
     }
 
-    public function getNotif($user_id)
-    {
-        return $this->db->get_where('tb_notif', ['user_id' => $user_id])->num_rows();
-    }
-
     public function getUserNotif($user_id)
     {
         return $this->db->get_where('tb_notif', ['user_id' => $user_id])->result_array();

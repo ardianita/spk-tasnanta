@@ -109,9 +109,8 @@ class dinas extends CI_Controller
         $data['title'] = 'Edit Profile';
         $data['admin'] = $this->M_Dinas->getDataDinas();
 
-        $this->form_validation->set_rules('username', 'Username', 'required|trim|alpha|is_unique[tb_user.username]', [
-            'required'  => 'Username Wajib Diisi!',
-            'is_unique' => 'Username Sudah Ada!'
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|alpha', [
+            'required'  => 'Username Wajib Diisi!'
         ]);
         $this->form_validation->set_rules('name', 'Nama Lengkap', 'required', [
             'required'  => 'Nama Lengkap Wajib Diisi!'
@@ -124,7 +123,7 @@ class dinas extends CI_Controller
         if ($this->form_validation->run() == false) {
             $this->load->view('template/header', $data);
             $this->load->view('template/sidebar_dinas', $data);
-            $this->load->view('admin/profile_dinas', $data);
+            $this->load->view('admin/profil_dinas', $data);
             $this->load->view('template/footer');
         } else {
             $this->M_Dinas->ubahDataProfile();

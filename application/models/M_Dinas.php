@@ -124,12 +124,13 @@ class M_Dinas extends CI_model
         $username  = $this->input->post('username', TRUE);
         $name      = $this->input->post('name', TRUE);
         $telp      = $this->input->post('telp', TRUE);
+        $foto      = $this->input->post('foto', TRUE);
 
         $data = array(
             'email'     => $email,
             'username'  => $username,
             'name'      => $name,
-            'telp'      => $telp
+            'foto'      => $foto
         );
 
         //Jika Ada Foto yang diupload
