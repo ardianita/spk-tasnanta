@@ -117,20 +117,18 @@ class M_Dinas extends CI_model
         $this->db->update('tb_pariwisata', $data);
     }
 
-
     public function ubahDataProfile()
     {
         $email     = $this->input->post('email', TRUE);
         $username  = $this->input->post('username', TRUE);
         $name      = $this->input->post('name', TRUE);
         $telp      = $this->input->post('telp', TRUE);
-        $foto      = $this->input->post('foto', TRUE);
 
         $data = array(
             'email'     => $email,
             'username'  => $username,
             'name'      => $name,
-            'foto'      => $foto
+            'telp'      => $telp
         );
 
         //Jika Ada Foto yang diupload
@@ -150,7 +148,7 @@ class M_Dinas extends CI_model
                 $data['foto'] = $foto_baru;
             } else {
                 $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
-                redirect('dinas/profile');
+                redirect('dinas/profil');
             }
         }
 
