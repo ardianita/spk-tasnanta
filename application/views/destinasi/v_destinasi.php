@@ -7,7 +7,8 @@
             <h6 class="m-0 font-weight-bold text-primary"><?= $title; ?></h6>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <a class="btn btn-warning btn-sm" href="<?= base_url('dinas/pdf'); ?>">Export PDF</a>
+            <div class="table-responsive my-3">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>

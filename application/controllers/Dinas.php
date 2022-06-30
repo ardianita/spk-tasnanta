@@ -320,4 +320,25 @@ class dinas extends CI_Controller
         $this->session->set_flashdata('pesan', '<div class="alert alert-info alert-dismissible fade show" role="alert">Status pembangunan ditetapkan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('dinas/pemeringkatan');
     }
+
+    public function pdf()
+    {
+        $this->load->library('pdf');
+
+        $data['wisata'] = $this->M_Desa->getWisata();
+        $data['status'] = $this->M_Dinas->getStatus();
+        $data['kriteria'] = $this->M_Kriteria->getAllKriteria();
+        $data['subkriteria'] = $this->M_Kriteria->getAllSubkriteria();
+        $data['nilai'] = $this->M_Desa->getPariwisataWithNilai();
+        $data['pengguna'] = $this->M_Dinas->getDataUser();
+
+        $size           = 'A4';
+        $orientation    = 'potrait';
+        $html           = $this->load->view('laporan/pdf', $data, TRUE);
+
+        $this->pdf->set_paper($size, $orientation);
+        $this->pdf->load_html($html);
+        $this->pdf->render();
+        $this->pdf->stream("laporan_destinasi-wisata.pdf", array('Attachment' => 0));
+    }
 }
