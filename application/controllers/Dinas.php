@@ -341,4 +341,69 @@ class dinas extends CI_Controller
         $this->pdf->render();
         $this->pdf->stream("laporan_destinasi-wisata.pdf", array('Attachment' => 0));
     }
+
+    public function excel()
+    {
+        $data['wisata'] = $this->M_Desa->getWisata();
+        $data['status'] = $this->M_Dinas->getStatus();
+        $data['kriteria'] = $this->M_Kriteria->getAllKriteria();
+        $data['subkriteria'] = $this->M_Kriteria->getAllSubkriteria();
+        $data['nilai'] = $this->M_Desa->getPariwisataWithNilai();
+        $data['pengguna'] = $this->M_Dinas->getDataUser();
+        $kriteria = $data['kriteria'];
+
+        require(APPPATH . 'PHPEXCEL-1.8/Classes/PHPExcel.php');
+        require(APPPATH . 'PHPEXCEL-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+
+        $object = new PHPExcel();
+        $object->getProperties()->setCreator('Tim-1D');
+        $object->getProperties()->setLastModifiedBy('Tim-1D');
+        $object->getProperties()->setTitle('Data Destinasi Wisata');
+
+        $object->setActiveSheetIndex(0);
+
+        $object->getActiveSheet()->setCellValue('A1', 'NO');
+        $object->getActiveSheet()->setCellValue('B1', 'Nama Destinasi Wisata');
+        $object->getActiveSheet()->setCellValue('C1', 'Nama Desa');
+        $object->getActiveSheet()->setCellValue('D1', 'Status Validasi');
+        $object->getActiveSheet()->setCellValue('E1', 'Status Pembangunan');
+        $object->getActiveSheet()->setCellValue('F1', $data['kriteria']);
+
+        $baris = 2;
+        $baris1 = 1;
+        $no = 1;
+
+        foreach ($data['nilai'] as $n) {
+            $object->getActiveSheet()->setCellValue('A', $baris, $no++);
+            $object->getActiveSheet()->setCellValue('B', $baris, $n['nm_pariwisata']);
+            foreach ($data['pengguna'] as $p) {
+                if ($p['id_user'] == $n['id_user']) {
+                    $object->getActiveSheet()->setCellValue('C', $baris, $p['name']);
+                }
+            }
+            $object->getActiveSheet()->setCellValue('D', $baris, $n['id_status']);
+            $object->getActiveSheet()->setCellValue('E', $baris, $n['id_built_status']);
+            foreach ($kriteria as $kr) {
+                $object->getActiveSheet()->setCellValue('F1', $baris1, $kr['nm_kriteria']);
+            }
+            foreach ($n['nilai'] as $n2) {
+                if ($kr['nm_kriteria'] == $n2['nm_kriteria']) {
+                    $object->getActiveSheet()->setCellValue('F', $baris, $n2['nm_subkriteria']);
+                }
+            }
+
+            $baris++;
+        }
+
+        $filename = "Data Destinasi Wisata" . 'xlsx';
+        $object->getActiveSheet()->setTitle('Data Destinasi Wisata');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-DispositionL attachment;filename' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer = PHPExcel_IOFactory::createWriter($object, 'Excel2007');
+        $writer->save('php://output');
+
+        exit;
+    }
 }

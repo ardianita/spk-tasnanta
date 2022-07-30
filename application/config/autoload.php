@@ -133,3 +133,4 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array('M_Dinas', 'M_Desa', 'M_Kriteria', 'M_Saw');
+$config['composer_autoload'] = "vendor/autoload.php";

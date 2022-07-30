@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
 
-<head></head>
+<head>
+    <title>PDF</title>
+</head>
 
 <body>
 
     <?php foreach ($nilai as $n) {
         if ($n['id_status'] == 0) {
-            $n['id_status'] = '<strong>Tidak Valid</strong>';
+            $n['id_status'] = 'Tidak Valid';
         } else {
-            $n['id_status'] = '<strong>Valid</strong>';
+            $n['id_status'] = 'Valid';
         }
 
         if ($n['id_built_status'] == 0) {
-            $n['id_built_status'] = '<strong>Belum Dibangun</strong>';
+            $n['id_built_status'] = 'Belum Dibangun';
         } else if ($n['id_built_status'] == 1) {
-            $n['id_built_status'] = '<strong>Akan Dibangun</strong>';
+            $n['id_built_status'] = 'Akan Dibangun';
         } else {
-            $n['id_built_status'] = '<strong>Telah Dibangun</strong>';
+            $n['id_built_status'] = 'Telah Dibangun';
         }
     ?>
         <center>
@@ -28,12 +30,11 @@
                 <thead>
                     <?php foreach ($pengguna as $p) :
                         if ($n['id_user'] == $p['id_user']) { ?>
-                            <p>Lokasi : <?= $p['name']; ?></p>
+                            <p><strong>Lokasi</strong> : <?= $p['name']; ?></p>
                     <?php }
                     endforeach; ?>
-                    <p>Status Validasi : <?= $n['id_status']; ?>
-                    <p>Status Pembangunan : <?= $n['id_built_status']; ?></p>
-                    <tr></tr>
+                    <p><strong>Status Validasi</strong> : <?= $n['id_status']; ?>
+                    <p><strong>Status Pembangunan</strong> : <?= $n['id_built_status']; ?></p>
                     <?php foreach ($kriteria as $kr) : ?>
                         <p><strong><?= $kr['nm_kriteria']; ?></strong> :
                         <?php

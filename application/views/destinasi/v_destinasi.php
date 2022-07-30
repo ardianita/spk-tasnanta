@@ -8,6 +8,7 @@
         </div>
         <div class="card-body">
             <a class="btn btn-warning btn-sm" href="<?= base_url('dinas/pdf'); ?>">Export PDF</a>
+            <a class="btn btn-success btn-sm" href="<?= base_url('dinas/excel'); ?>">Export Excel</a>
             <div class="table-responsive my-3">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>

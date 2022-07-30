@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2022 at 09:45 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Generation Time: Jul 30, 2022 at 06:20 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -192,14 +192,14 @@ CREATE TABLE `tb_pariwisata` (
   `tgl` date NOT NULL DEFAULT current_timestamp(),
   `nm_pariwisata` varchar(255) NOT NULL,
   `id_status` int(11) NOT NULL,
-  `built_status` int(11) NOT NULL
+  `id_built_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_pariwisata`
 --
 
-INSERT INTO `tb_pariwisata` (`id_pariwisata`, `id_user`, `tgl`, `nm_pariwisata`, `id_status`, `built_status`) VALUES
+INSERT INTO `tb_pariwisata` (`id_pariwisata`, `id_user`, `tgl`, `nm_pariwisata`, `id_status`, `id_built_status`) VALUES
 (15, 19, '2022-04-28', 'Nongko Ijo', 1, 2),
 (19, 24, '2022-05-08', 'Air Terjun Banyulawe Dong', 1, 1),
 (21, 19, '2022-05-09', 'Air Terjun Slamir', 1, 2),
@@ -376,7 +376,7 @@ ALTER TABLE `tb_pariwisata`
   ADD PRIMARY KEY (`id_pariwisata`),
   ADD KEY `id_status` (`id_status`),
   ADD KEY `id_user` (`id_user`),
-  ADD KEY `built_status` (`built_status`);
+  ADD KEY `built_status` (`id_built_status`);
 
 --
 -- Indexes for table `tb_status`
@@ -469,7 +469,7 @@ ALTER TABLE `tb_notif`
 ALTER TABLE `tb_pariwisata`
   ADD CONSTRAINT `tb_pariwisata_ibfk_1` FOREIGN KEY (`id_status`) REFERENCES `tb_status` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_pariwisata_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_pariwisata_ibfk_3` FOREIGN KEY (`built_status`) REFERENCES `tb_sts_pemb` (`id_sts_pemb`);
+  ADD CONSTRAINT `tb_pariwisata_ibfk_3` FOREIGN KEY (`id_built_status`) REFERENCES `tb_sts_pemb` (`id_sts_pemb`);
 
 --
 -- Constraints for table `tb_subkriteria`
