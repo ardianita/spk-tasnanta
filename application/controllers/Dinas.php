@@ -1,7 +1,11 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class dinas extends CI_Controller
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -344,66 +348,125 @@ class dinas extends CI_Controller
 
     public function excel()
     {
-        $data['wisata'] = $this->M_Desa->getWisata();
-        $data['status'] = $this->M_Dinas->getStatus();
-        $data['kriteria'] = $this->M_Kriteria->getAllKriteria();
-        $data['subkriteria'] = $this->M_Kriteria->getAllSubkriteria();
-        $data['nilai'] = $this->M_Desa->getPariwisataWithNilai();
-        $data['pengguna'] = $this->M_Dinas->getDataUser();
-        $kriteria = $data['kriteria'];
 
-        require(APPPATH . 'PHPEXCEL-1.8/Classes/PHPExcel.php');
-        require(APPPATH . 'PHPEXCEL-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
 
-        $object = new PHPExcel();
-        $object->getProperties()->setCreator('Tim-1D');
-        $object->getProperties()->setLastModifiedBy('Tim-1D');
-        $object->getProperties()->setTitle('Data Destinasi Wisata');
+        $style_title = [
+            'font'  => [
+                'bold' => true,
+                'size' => 15
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+            ]
+        ];
+        $style_col = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
+            ]
+        ];
 
-        $object->setActiveSheetIndex(0);
+        $style_row = [
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
+            ]
+        ];
 
-        $object->getActiveSheet()->setCellValue('A1', 'NO');
-        $object->getActiveSheet()->setCellValue('B1', 'Nama Destinasi Wisata');
-        $object->getActiveSheet()->setCellValue('C1', 'Nama Desa');
-        $object->getActiveSheet()->setCellValue('D1', 'Status Validasi');
-        $object->getActiveSheet()->setCellValue('E1', 'Status Pembangunan');
-        $object->getActiveSheet()->setCellValue('F1', $data['kriteria']);
+        $sheet->setCellValue('A1', "DATA DESTINASI WISATA");
+        $sheet->mergeCells('A1:F1');
+        $sheet->getStyle('A1')->applyFromArray($style_title);
 
-        $baris = 2;
-        $baris1 = 1;
+        $sheet->setCellValue('A3', 'No');
+        $sheet->setCellValue('B3', 'Tanggal');
+        $sheet->setCellValue('C3', 'Nama Destinasi Wisata');
+        $sheet->setCellValue('D3', 'Nama Desa');
+        $sheet->setCellValue('E3', 'Status Validasi');
+        $sheet->setCellValue('F3', 'Status Pembangunan');
+
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+
+        $pengguna = $this->M_Dinas->getDataUser();
+        $wisata = $this->M_Desa->getWisata();
+
         $no = 1;
+        $baris = 4;
 
-        foreach ($data['nilai'] as $n) {
-            $object->getActiveSheet()->setCellValue('A', $baris, $no++);
-            $object->getActiveSheet()->setCellValue('B', $baris, $n['nm_pariwisata']);
-            foreach ($data['pengguna'] as $p) {
-                if ($p['id_user'] == $n['id_user']) {
-                    $object->getActiveSheet()->setCellValue('C', $baris, $p['name']);
-                }
-            }
-            $object->getActiveSheet()->setCellValue('D', $baris, $n['id_status']);
-            $object->getActiveSheet()->setCellValue('E', $baris, $n['id_built_status']);
-            foreach ($kriteria as $kr) {
-                $object->getActiveSheet()->setCellValue('F1', $baris1, $kr['nm_kriteria']);
-            }
-            foreach ($n['nilai'] as $n2) {
-                if ($kr['nm_kriteria'] == $n2['nm_kriteria']) {
-                    $object->getActiveSheet()->setCellValue('F', $baris, $n2['nm_subkriteria']);
-                }
+        foreach ($wisata as $w) {
+            if ($w['id_status'] == 0) {
+                $w['id_status'] = 'Tidak Valid';
+            } else {
+                $w['id_status'] = 'Valid';
             }
 
+            if ($w['id_built_status'] == 0) {
+                $w['id_built_status'] = 'Belum Dibangun';
+            } else if ($w['id_built_status'] == 1) {
+                $w['id_built_status'] = 'Akan Dibangun';
+            } else {
+                $w['id_built_status'] = 'Telah Dibangun';
+            }
+
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, format_indo($w['tgl']));
+            $sheet->setCellValue('C' . $baris, $w['nm_pariwisata']);
+            foreach ($pengguna as $p) {
+                if ($w['id_user'] == $p['id_user']) {
+                    $sheet->setCellValue('D' . $baris, $p['name']);
+                }
+            }
+            $sheet->setCellValue('E' . $baris, $w['id_status']);
+            $sheet->setCellValue('F' . $baris, $w['id_built_status']);
+
+            $sheet->getStyle('A' . $baris)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $baris)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $baris)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $baris)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $baris)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $baris)->applyFromArray($style_row);
+
+            $no++;
             $baris++;
         }
 
-        $filename = "Data Destinasi Wisata" . 'xlsx';
-        $object->getActiveSheet()->setTitle('Data Destinasi Wisata');
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-DispositionL attachment;filename' . $filename . '"');
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(25);
+        $sheet->getColumnDimension('C')->setWidth(30);
+        $sheet->getColumnDimension('D')->setWidth(20);
+        $sheet->getColumnDimension('E')->setWidth(25);
+        $sheet->getColumnDimension('F')->setWidth(25);
+
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+
+        $writer = new Xlsx($spreadsheet);
+
+        $filename = 'laporan-destinasi-wisata';
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
         header('Cache-Control: max-age=0');
 
-        $writer = PHPExcel_IOFactory::createWriter($object, 'Excel2007');
         $writer->save('php://output');
-
-        exit;
     }
 }
